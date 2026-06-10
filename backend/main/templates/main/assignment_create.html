@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Yangi topshiriq yaratish{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+    <div class="form-card large">
+        <div class="form-header">
+            <h1>Yangi topshiriq yaratish</h1>
+            <p>Topshiriqni tanlangan guruhga biriktiring.</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.description.label }}</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.group.label }}</label>
+                {{ form.group }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.due_date.label }}</label>
+                {{ form.due_date }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.max_score.label }}</label>
+                {{ form.max_score }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.status.label }}</label>
+                {{ form.status }}
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'teacher_dashboard' %}" class="btn-secondary">Bekor qilish</a>
+                <button type="submit" class="btn-primary">Topshiriq yaratish</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

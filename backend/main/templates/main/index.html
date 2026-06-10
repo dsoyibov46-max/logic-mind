@@ -1,0 +1,245 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Logic Mind | Bosh sahifa{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/landing.css' %}">
+
+<main class="lm-landing">
+
+    <section class="lm-hero" id="home">
+        <div class="lm-container lm-hero-layout">
+
+            <div class="lm-hero-left">
+                <span class="lm-kicker">Logic Mind Platform</span>
+
+                <h1>Mantiqiy fikrlashni rivojlantiruvchi zamonaviy ta’lim muhiti</h1>
+
+                <p>
+                    Logic Mind — o‘quvchilar uchun interaktiv o‘yinlar, o‘qituvchilar
+                    uchun monitoring va ota-onalar uchun nazorat tizimini birlashtirgan
+                    raqamli platforma.
+                </p>
+
+                <div class="lm-actions">
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.role == 'student' %}
+                            <a href="{% url 'student_dashboard' %}" class="lm-primary-btn">Dashboard</a>
+                        {% elif request.user.role == 'teacher' %}
+                            <a href="{% url 'teacher_dashboard' %}" class="lm-primary-btn">Dashboard</a>
+                        {% elif request.user.role == 'parent' %}
+                            <a href="{% url 'parent_dashboard' %}" class="lm-primary-btn">Dashboard</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'register' %}" class="lm-primary-btn">Boshlash</a>
+                    {% endif %}
+
+                    <a href="#platforma" class="lm-secondary-btn">Platformani ko‘rish</a>
+                </div>
+
+                <div class="lm-mini-stats">
+                    <div>
+                        <strong>3</strong>
+                        <span>Role panel</span>
+                    </div>
+                    <div>
+                        <strong>AI</strong>
+                        <span>Tavsiyalar</span>
+                    </div>
+                    <div>
+                        <strong>24/7</strong>
+                        <span>Monitoring</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lm-hero-right">
+                <div class="lm-dashboard-mockup">
+
+                    <div class="mockup-top">
+                        <div>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <b>Logic Mind Dashboard</b>
+                    </div>
+
+                    <div class="mockup-body">
+                        <div class="mockup-profile">
+                            <div class="avatar">🧠</div>
+                            <div>
+                                <h3>Student progress</h3>
+                                <p>AI asosida rivojlanish monitoringi</p>
+                            </div>
+                        </div>
+
+                        <div class="mockup-progress">
+                            <div class="progress-head">
+                                <span>Faollik</span>
+                                <b>75%</b>
+                            </div>
+                            <div class="bar"><span style="width:75%"></span></div>
+                        </div>
+
+                        <div class="mockup-progress">
+                            <div class="progress-head">
+                                <span>O‘zlashtirish</span>
+                                <b>62%</b>
+                            </div>
+                            <div class="bar"><span style="width:62%"></span></div>
+                        </div>
+
+                        <div class="mockup-cards">
+                            <div>
+                                <i>🎮</i>
+                                <b>Games</b>
+                                <span>Mantiqiy mashqlar</span>
+                            </div>
+                            <div>
+                                <i>📊</i>
+                                <b>Results</b>
+                                <span>Natijalar tahlili</span>
+                            </div>
+                            <div>
+                                <i>🤖</i>
+                                <b>AI</b>
+                                <span>Shaxsiy tavsiya</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="lm-section" id="platforma">
+        <div class="lm-container">
+            <div class="lm-section-title">
+                <span>Platforma modullari</span>
+                <h2>Har bir foydalanuvchi uchun alohida panel</h2>
+                <p>
+                    O'quvchilar, O'qtuvchilar va ota-ona  rollari uchun qulay, tushunarli va
+                    amaliy boshqaruv tizimi.
+                </p>
+            </div>
+
+            <div class="lm-role-grid">
+
+                <div class="lm-role-card">
+                    <div class="role-icon">
+                        <span>01</span>
+                    </div>
+
+                    <h3>O'QUVCHILAR OYNASI</h3>
+                    <p>O‘yinlar, natijalar va AI tavsiyalar orqali rivojlanish.</p>
+
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'student_dashboard' %}">Panelga kirish</a>
+                    {% else %}
+                        <a href="{% url 'register' %}">Boshlash</a>
+                    {% endif %}
+                </div>
+
+                <div class="lm-role-card">
+                    <div class="role-icon">
+                        <span>02</span>
+                    </div>
+
+                    <h3>O'QITUVCHILAR OYNASI</h3>
+                    <p>O‘quvchilar natijalarini kuzatish va monitoring qilish.</p>
+
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'teacher_dashboard' %}">Panelga kirish</a>
+                    {% else %}
+                        <a href="{% url 'register' %}">Boshlash</a>
+                    {% endif %}
+                </div>
+
+                <div class="lm-role-card">
+                    <div class="role-icon">
+                        <span>03</span>
+                    </div>
+
+                    <h3>OTA-ONALAR OYNAS</h3>
+                    <p>Farzand faolligi va o‘zlashtirish holatini nazorat qilish.</p>
+
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'parent_dashboard' %}">Panelga kirish</a>
+                    {% else %}
+                        <a href="{% url 'register' %}">Boshlash</a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="lm-section lm-dark-section" id="imkoniyatlar">
+        <div class="lm-container lm-info-grid">
+            <div>
+                <span class="lm-kicker light">Nega aynan Logic Mind?</span>
+
+                <h2>O‘yin, monitoring va AI tavsiyalar bitta platformada</h2>
+
+                <p>
+                    Platforma o‘quvchining mantiqiy fikrlashini rivojlantirish,
+                    natijalarni saqlash va o‘qituvchi hamda ota-onaga aniq tahlil
+                    berish uchun ishlab chiqilgan.
+                </p>
+            </div>
+
+            <div class="lm-info-list">
+                <div><b>01</b><span>Role-based authentication</span></div>
+                <div><b>02</b><span>GameResult statistikasi</span></div>
+                <div><b>03</b><span>AI recommendation system</span></div>
+                <div><b>04</b><span>Teacher va Parent monitoring</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="lm-footer-contact" id="aloqa">
+        <div class="lm-container lm-footer-grid">
+
+            <div class="lm-footer-brand">
+                <h2>🏆 LOGIC MIND</h2>
+                <p>Mantiqiy fikrlash va raqamli ta’lim platformasi</p>
+            </div>
+
+            <div class="lm-footer-social">
+                <h3>Biz ijtimoiy tarmoqlarda</h3>
+
+                <a href="#">
+                    <span>◎</span>
+                    Instagram
+                </a>
+
+                <a href="#">
+                    <span>✈</span>
+                    Telegram
+                </a>
+
+                <a href="#">
+                    <span>f</span>
+                    Facebook
+                </a>
+            </div>
+
+            <div class="lm-footer-info">
+                <h3>Bog‘lanish</h3>
+
+                <p>Aloqa uchun: +998 99 829 70 30</p>
+                <p>Savollar uchun: Telegram Bot</p>
+                <p>Yangiliklar uchun: Telegram Kanal</p>
+                <p>Andijon shahri, O‘zbekiston</p>
+                <p>info@logicmind.uz</p>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+{% endblock %}

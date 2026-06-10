@@ -1,0 +1,122 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="teacher-dashboard-page">
+
+    <section class="teacher-hero">
+        <div class="teacher-hero-content">
+            <span class="teacher-badge">Logic Mind Parent Panel</span>
+
+            <h1>👨‍👩‍👦 Parent Dashboard</h1>
+
+            <p>
+                Farzandingizning natijalari, monitoringi va AI tavsiyalari
+            </p>
+        </div>
+    </section>
+
+    <section class="teacher-stats">
+
+        <div class="teacher-stat-card purple">
+            <div class="teacher-icon">👦</div>
+            <h3>
+                {% if child %}
+                    {{ child.username }}
+                {% else %}
+                    Biriktirilmagan
+                {% endif %}
+            </h3>
+            <p>Farzand</p>
+        </div>
+
+        <div class="teacher-stat-card blue">
+            <div class="teacher-icon">🎮</div>
+            <h3>{{ total_games }}</h3>
+            <p>Games Played</p>
+        </div>
+
+        <div class="teacher-stat-card green">
+            <div class="teacher-icon">🏆</div>
+            <h3>{{ best_score }}</h3>
+            <p>Best Score</p>
+        </div>
+
+        <div class="teacher-stat-card orange">
+            <div class="teacher-icon">📊</div>
+            <h3>{{ avg_score|floatformat:1 }}</h3>
+            <p>Average Score</p>
+        </div>
+
+    </section>
+
+    <section class="teacher-panel">
+
+        <div class="teacher-panel-header">
+            <div>
+                <span class="panel-label">AI Monitoring</span>
+                <h2>🤖 AI Analiz</h2>
+            </div>
+        </div>
+
+        <div class="teacher-top-item">
+            <div class="student-info">
+                <h4>{{ ai_status }}</h4>
+                <p>{{ ai_recommendation }}</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="teacher-panel">
+
+        <div class="teacher-panel-header">
+            <div>
+                <span class="panel-label">Recent Activity</span>
+                <h2>🕘 Oxirgi natijalar</h2>
+            </div>
+        </div>
+
+        <div class="teacher-table-wrapper">
+
+            <table class="student-detail-table">
+
+                <thead>
+                    <tr>
+                        <th>Game</th>
+                        <th>Score</th>
+                        <th>Time</th>
+                        <th>Level</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for r in child_results %}
+                    <tr>
+                        <td>{{ r.game.title }}</td>
+                        <td>{{ r.score }}</td>
+                        <td>{{ r.time_spent }}s</td>
+                        <td>{{ r.level_reached }}</td>
+                        <td>{{ r.played_at|date:"d.m.Y H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">
+                            Hozircha natijalar mavjud emas
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

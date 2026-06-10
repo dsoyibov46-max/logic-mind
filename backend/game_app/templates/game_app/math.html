@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Tez Hisoblash | Logic Mind{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'games/math/style.css' %}">
+
+<div class="container">
+
+    <h1>⚡ Tez Hisoblash</h1>
+
+    <!-- Stats panel -->
+    <div class="stats-box">
+        <div class="stat">
+            <span>⏱ Vaqt</span>
+            <h2 id="timer">60</h2>
+        </div>
+        <div class="stat">
+            <span>⭐ Score</span>
+            <h2 id="score">0</h2>
+        </div>
+    </div>
+
+    <!-- Savol (p o'rniga div qilindi, shrift chiroyli chiqishi uchun) -->
+    <div id="question" style="display:none"></div>
+
+    <!-- Javob variantlari -->
+    <div id="options" style="display:none"></div>
+
+    <!-- Natija xabari -->
+    <div id="result"></div>
+
+    <!-- Boshlash tugmasi -->
+    <button id="startBtn" class="start-btn">
+        🚀 Boshlash
+    </button>
+
+    <!-- O'yin tugash ekrani -->
+    <div id="gameOver" style="display:none" class="game-over">
+        <h2>⏰ Vaqt tugadi!</h2>
+        <p>To'g'ri javoblar: <strong id="finalScore">0</strong></p>
+        <p>Jami savollar: <strong id="finalTotal">0</strong></p>
+        <button id="playAgainBtn" class="start-btn" style="margin-bottom: 15px;">🔄 Qayta o'ynash</button>
+        <br>
+        <a href="{% url 'game_app:games_list' %}" class="back-btn">⬅ O'yinlarga qaytish</a>
+    </div>
+
+    <!-- O'yin tugamagan holda orqaga -->
+    <a href="{% url 'game_app:games_list' %}" class="back-btn" id="backLink">
+        ⬅ Orqaga
+    </a>
+
+</div>
+
+<!-- GAME_ID — Django dan keladi -->
+<script>
+    const GAME_ID = parseInt("{{ game.id }}");
+</script>
+<script src="{% static 'games/math/script.js' %}"></script>
+
+{% endblock %}

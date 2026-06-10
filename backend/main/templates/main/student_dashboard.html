@@ -1,0 +1,182 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/student_dashboard.css' %}">
+
+<section class="lm-student-page">
+
+    <div class="lm-hero">
+        <div class="lm-hero-content">
+            <span class="lm-badge">Student panel</span>
+            <h1>Xush kelibsiz, {{ request.user.first_name|default:request.user.username }}</h1>
+            <p>
+                Logic Mind platformasida mantiqiy o‘yinlar, natijalar va tavsiyalar
+                orqali o‘z bilimlaringizni rivojlantiring.
+            </p>
+        </div>
+    </div>
+
+    <div class="lm-stats">
+        <div class="lm-stat-card">
+            <span>Monitoring</span>
+            <strong>{{ monitoring|default:0 }}%</strong>
+        </div>
+
+        <div class="lm-stat-card">
+            <span>Bajarilgan topshiriqlar</span>
+            <strong>{{ completed_tasks|default:0 }}</strong>
+        </div>
+
+        <div class="lm-stat-card">
+            <span>Kutilayotgan topshiriqlar</span>
+            <strong>{{ pending_tasks|default:0 }}</strong>
+        </div>
+
+        <div class="lm-stat-card">
+            <span>O‘rtacha natija</span>
+            <strong>{{ average_score|default:0 }}%</strong>
+        </div>
+    </div>
+
+    <div class="lm-main-grid">
+
+        <div class="lm-panel">
+            <div class="lm-panel-title">
+                <h2>🎮 Mavjud o‘yinlar</h2>
+                <p>Faol o‘yinlardan birini tanlang va mashqni boshlang.</p>
+            </div>
+
+            <div class="lm-games-grid">
+                {% for game in games %}
+                <div class="lm-game-card">
+
+                    {% if game.thumbnail %}
+                        <img src="{{ game.thumbnail.url }}" alt="{{ game.title }}">
+                    {% else %}
+                        <div class="lm-game-placeholder">🎮</div>
+                    {% endif %}
+
+                    <div class="lm-game-body">
+                        <div class="lm-game-head">
+                            <h3>{{ game.title }}</h3>
+                            <span>Faol</span>
+                        </div>
+
+                        <p>{{ game.description|truncatewords:18 }}</p>
+
+                        <div class="lm-game-tags">
+                            <small>🧠 Mantiq</small>
+                            <small>⏱ 5 daqiqa</small>
+                            <small>⭐ Boshlang‘ich</small>
+                        </div>
+
+                        <a href="{% url 'game_app:'|add:game.url_name %}" class="lm-play-btn">
+                            O‘yinni boshlash
+                        </a>
+                    </div>
+
+                </div>
+                {% empty %}
+                <p>Hozircha faol o‘yinlar mavjud emas.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="lm-panel">
+            <div class="lm-panel-title">
+                <h2>📊 So‘nggi natijalar</h2>
+                <p>Oxirgi o‘yin natijalaringiz.</p>
+            </div>
+
+            <div class="lm-results">
+                {% for result in results %}
+                <div class="lm-result-item">
+                    <div>
+                        <b>{{ result.game.title }}</b>
+                        <small>Oxirgi urinish natijasi</small>
+                    </div>
+                    <strong>{{ result.score }}%</strong>
+                </div>
+                {% empty %}
+                <p>Hozircha natija yo‘q.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="lm-panel lm-ai-panel">
+        <div class="lm-panel-title">
+            <h2>💡 AI tavsiyalar</h2>
+            <p>Natijangizni yaxshilash uchun shaxsiy tavsiyalar.</p>
+        </div>
+
+        <div class="lm-recommendations">
+            <div>✅ Har kuni kamida 1 ta mantiqiy o‘yin bajaring</div>
+            <div>✅ Natijangiz 70% dan past bo‘lsa, qayta urinib ko‘ring</div>
+            <div>✅ Xotira va diqqat mashqlariga ko‘proq vaqt ajrating</div>
+        </div>
+    </div>
+
+ <section class="student-assignments-section">
+   
+    <div class="section-header">
+        <div>
+            <h2>Mening topshiriqlarim</h2>
+            <p>Guruhlaringizga biriktirilgan faol topshiriqlar.</p>
+        </div>
+    </div>
+
+    <div class="student-assignments-grid">
+        {% for assignment in assignments %}
+            <div class="student-assignment-card">
+                <div class="assignment-top">
+                    <div class="assignment-icon">📝</div>
+                    <span class="assignment-status status-{{ assignment.status }}">
+                        {{ assignment.status }}
+                    </span>
+                </div>
+
+                <h3>{{ assignment.title }}</h3>
+
+                <p>{{ assignment.description|truncatewords:22 }}</p>
+
+                <div class="assignment-meta">
+                    <div>
+                        <span>🎓 Guruh</span>
+                        <strong>{{ assignment.group.name }}</strong>
+                    </div>
+
+                    <div>
+                        <span>👨‍🏫 O‘qituvchi</span>
+                        <strong>{{ assignment.teacher.username }}</strong>
+                    </div>
+
+                    <div>
+                        <span>🎯 Maksimal ball</span>
+                        <strong>{{ assignment.max_score }}</strong>
+                    </div>
+
+                    <div>
+                        <span>📅 Deadline</span>
+                        <strong>
+                            {% if assignment.due_date %}
+                                {{ assignment.due_date|date:"d.m.Y H:i" }}
+                            {% else %}
+                                Belgilanmagan
+                            {% endif %}
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="empty-assignments">
+                <h3>Hozircha topshiriq yo‘q</h3>
+                <p>Siz biriktirilgan guruhlarga hali topshiriq berilmagan.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+</section>
+{% endblock %}

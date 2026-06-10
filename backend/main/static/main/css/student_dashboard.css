@@ -1,0 +1,410 @@
+.lm-student-page {
+    min-height: 100vh;
+    padding: 42px 6%;
+    background: linear-gradient(135deg, #f3f7ff, #f8f5ff);
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #0f172a;
+}
+
+.lm-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 32px;
+    padding: 48px;
+    margin-bottom: 32px;
+    background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+    color: #fff;
+    box-shadow: 0 28px 70px rgba(37, 99, 235, 0.28);
+}
+
+.lm-hero::before {
+    content: "";
+    position: absolute;
+    right: -90px;
+    top: -90px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+}
+
+.lm-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.lm-badge {
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.18);
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.lm-hero h1 {
+    margin: 0 0 14px;
+    font-size: 40px;
+    font-weight: 900;
+    color: #fff;
+}
+
+.lm-hero p {
+    max-width: 720px;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.93);
+}
+
+.lm-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-bottom: 32px;
+}
+
+.lm-stat-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 26px;
+    box-shadow: 0 18px 45px rgba(15,23,42,0.08);
+    border: 1px solid #e5e7eb;
+    transition: 0.25s ease;
+}
+
+.lm-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 55px rgba(37,99,235,0.15);
+}
+
+.lm-stat-card span {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 14px;
+}
+
+.lm-stat-card strong {
+    font-size: 34px;
+    color: #0f172a;
+    font-weight: 900;
+}
+
+.lm-main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 28px;
+    margin-bottom: 28px;
+}
+
+.lm-panel {
+    background: #fff;
+    border-radius: 30px;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 20px 55px rgba(15,23,42,0.08);
+}
+
+.lm-panel-title {
+    margin-bottom: 24px;
+}
+
+.lm-panel-title h2 {
+    margin: 0 0 8px;
+    font-size: 26px;
+    color: #0f172a;
+    font-weight: 900;
+}
+
+.lm-panel-title p {
+    margin: 0;
+    color: #64748b;
+}
+
+.lm-games-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.lm-game-card {
+    overflow: hidden;
+    border-radius: 50px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 16px 42px rgba(15,23,42,0.08);
+    transition: 0.25s ease;
+}
+
+.lm-game-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 25px 60px rgba(37,99,235,0.18);
+}
+.lm-game-card img {
+    width: 98%;
+    height: 280px;
+    object-fit: contain;
+    display: block;
+    margin: 8px auto 0;
+    border-radius: 22px;
+    background: #f8fafc;
+    padding: 8px;
+    transition: transform 0.3s ease;
+}
+
+.lm-game-placeholder {
+    width: 98%;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    background: linear-gradient(135deg, #dbeafe, #ede9fe);
+    margin: 8px auto 0;
+    border-radius: 22px;
+}
+
+
+.lm-game-card:hover img {
+    transform: scale(1.05);}
+
+
+.lm-game-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    background: linear-gradient(135deg, #dbeafe, #ede9fe);
+}
+
+.lm-game-body {
+    padding: 22px;
+}
+
+.lm-game-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.lm-game-head h3 {
+    margin: 0;
+    font-size: 21px;
+    color: #0f172a;
+    font-weight: 900;
+}
+
+.lm-game-head span {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 7px 13px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.lm-game-body p {
+    color: #64748b;
+    line-height: 1.6;
+    min-height: 45px;
+}
+
+.lm-game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+}
+
+.lm-game-tags small {
+    background: #f1f5f9;
+    padding: 7px 11px;
+    border-radius: 12px;
+    color: #334155;
+    font-weight: 700;
+}
+
+.lm-play-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white !important;
+    text-decoration: none;
+    font-weight: 800;
+    box-shadow: 0 14px 30px rgba(37,99,235,0.25);
+}
+
+.lm-results {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 430px;
+    overflow-y: auto;
+}
+
+.lm-result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 17px;
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.lm-result-item b {
+    display: block;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.lm-result-item small {
+    color: #64748b;
+}
+
+.lm-result-item strong {
+    color: #2563eb;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.lm-ai-panel {
+    margin-bottom: 30px;
+}
+
+.lm-recommendations {
+    display: grid;
+    gap: 14px;
+}
+
+.lm-recommendations div {
+    padding: 16px 18px;
+    border-radius: 17px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    font-weight: 700;
+    color: #334155;
+}
+
+@media (max-width: 1100px) {
+    .lm-main-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lm-games-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 850px) {
+    .lm-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lm-games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lm-hero h1 {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 560px) {
+    .lm-student-page {
+        padding: 24px 4%;
+    }
+
+    .lm-hero {
+        padding: 30px 24px;
+        border-radius: 24px;
+    }
+
+    .lm-hero h1 {
+        font-size: 25px;
+    }
+
+    .lm-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .lm-panel {
+        padding: 22px;
+        border-radius: 24px;
+    }
+}
+/* ===============================
+   EXTRA MOBILE POLISH
+================================ */
+
+@media (max-width: 768px) {
+    .lm-student-page {
+        padding-top: 18px;
+    }
+
+    .lm-hero {
+        margin-bottom: 22px;
+    }
+
+    .lm-badge {
+        font-size: 13px;
+        padding: 7px 14px;
+    }
+
+    .lm-stat-card {
+        padding: 22px;
+    }
+
+    .lm-stat-card strong {
+        font-size: 30px;
+    }
+
+    .lm-main-grid {
+        gap: 22px;
+    }
+
+    .lm-panel-title h2 {
+        font-size: 22px;
+    }
+
+    .lm-game-card img,
+    .lm-game-placeholder {
+        height: 220px;
+    }
+}
+
+@media (max-width: 420px) {
+    .lm-hero h1 {
+        font-size: 23px;
+    }
+
+    .lm-hero p {
+        font-size: 13.5px;
+    }
+
+    .lm-panel {
+        padding: 18px;
+    }
+
+    .lm-game-body {
+        padding: 18px;
+    }
+
+    .lm-game-card img,
+    .lm-game-placeholder {
+        height: 190px;
+    }
+
+    .lm-play-btn {
+        min-height: 44px;
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,99 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'games/electro_labirint/css/electro_labirint.css' %}">
+
+<h1>⚡ Electro Labyrinth PRO</h1>
+
+<!-- INFO PANEL -->
+<div class="top-panel">
+    <div class="info">Level: <span id="level">1</span></div>
+    <div class="info">Moves: <span id="moves">0</span> / <span id="maxMoves">0</span></div>
+    <div class="info">Time: <span id="timer">0</span>s</div>
+    <div class="info">Best: <span id="best">0</span></div>
+    <div class="info">Stars: <span id="stars">⭐</span></div>
+</div>
+
+<!-- MESSAGE -->
+<div id="message"></div>
+
+<!-- GAME GRID -->
+<div id="grid"></div>
+
+<!-- CONTROL BUTTONS -->
+<div class="controls">
+    <button onclick="restartGame()">🔄 Restart</button>
+    <button onclick="shuffle()">🔀 Shuffle</button>
+    <button onclick="undo()">↩ Undo</button>
+    <button onclick="hint()">💡 Hint</button>
+    <button type="button" onclick="finishGame()">✅ Tugatish</button>
+</div>
+
+<!-- WIN SCREEN -->
+<div id="winScreen" class="win-screen">
+    <h1 class="win-text">🎉 G'ALABA!</h1>
+    <div id="winStars" class="win-stars">⭐⭐⭐</div>
+    <div class="win-buttons">
+        <button onclick="nextLevel()">➡ Next Level</button>
+        <button onclick="restartGame()">🔄 Restart</button>
+    </div>
+</div>
+
+<!-- CONFETTI -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<!-- JS -->
+<script src="{% static 'games/electro_labirint/js/electro_labirint.js' %}"></script>
+
+<form id="scoreForm" method="POST" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" id="scoreInput" name="score" value="0">
+</form>
+
+<script>
+    let scoreSaved = false;
+
+    function calculateFinalScore() {
+        const moves = parseInt(document.getElementById("moves").innerText) || 0;
+        const maxMoves = parseInt(document.getElementById("maxMoves").innerText) || 1;
+        const time = parseInt(document.getElementById("timer").innerText) || 0;
+
+        let score = 100;
+
+        if (moves > maxMoves) {
+            score -= (moves - maxMoves) * 5;
+        }
+
+        score -= Math.floor(time / 5);
+
+        if (score < 0) score = 0;
+        if (score > 100) score = 100;
+
+        return score;
+    }
+
+    function saveGameResult() {
+        if (scoreSaved) return;
+
+        scoreSaved = true;
+
+        const finalScore = calculateFinalScore();
+        document.getElementById("scoreInput").value = finalScore;
+        document.getElementById("scoreForm").submit();
+    }
+
+    function finishGame() {
+        document.getElementById("message").innerText = "✅ O‘yin tugatildi. Natija saqlanmoqda...";
+        saveGameResult();
+    }
+</script>
+<script>
+  const GAME_ID = {{ game.id }};
+</script>
+<form id="scoreForm" method="POST" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" id="scoreInput" name="score" value="0">
+</form>
+
+{% endblock %}

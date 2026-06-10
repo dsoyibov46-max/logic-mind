@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}TOP 10 O'quvchilar | Logic Mind{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/leaderboard.css' %}">
+
+<section class="rank-page">
+
+    <div class="rank-hero">
+        <span>🏆 Logic Mind Ranking</span>
+        <h1>TOP 10 O'quvchilar</h1>
+        <p>Eng yuqori natija ko'rsatgan o'quvchilar reytingi</p>
+    </div>
+
+    <div class="rank-board">
+
+        <div class="rank-head">
+            <div>#</div>
+            <div>O'quvchi</div>
+            <div>Ball</div>
+            <div>Vaqt</div>
+            <div>Level</div>
+        </div>
+
+        {% for result in results %}
+        <div class="rank-row rank-{{ forloop.counter }}">
+
+            <div class="rank-place">
+                {% if forloop.counter == 1 %}
+                    🥇
+                {% elif forloop.counter == 2 %}
+                    🥈
+                {% elif forloop.counter == 3 %}
+                    🥉
+                {% else %}
+                    {{ forloop.counter }}
+                {% endif %}
+            </div>
+
+            <div class="rank-user">
+                <div class="rank-avatar">
+                    {% if result.user__avatar %}
+                        <img src="/media/{{ result.user__avatar }}" alt="{{ result.user__username }}">
+                    {% else %}
+                        {{ result.user__username|first|upper }}
+                    {% endif %}
+                </div>
+                <div>
+                    <strong>{{ result.user__username }}</strong>
+                    <small>Logic Mind student</small>
+                </div>
+            </div>
+
+            <div class="rank-score">{{ result.score }}</div>
+            <div class="rank-time">{{ result.time_spent|default:0 }}s</div>
+            <div class="rank-level">Lv {{ result.level_reached|default:1 }}</div>
+
+        </div>
+        {% empty %}
+        <div class="rank-empty">
+            🎮 Hozircha reyting ma'lumotlari mavjud emas.
+        </div>
+        {% endfor %}
+
+    </div>
+
+</section>
+{% endblock %}

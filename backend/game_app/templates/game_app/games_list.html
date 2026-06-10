@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<section class="dashboard-section">
+    <div class="dashboard-header">
+        <h1>O‘yinlar</h1>
+        <p>Logic Mind platformasidagi mantiqiy o‘yinlar</p>
+    </div>
+
+    <div class="dashboard-grid">
+        {% for game in games %}
+            <div class="dashboard-card">
+                <h3>{{ game.title }}</h3>
+                <p>{{ game.description|default:"Mantiqiy fikrlashni rivojlantiruvchi o‘yin" }}</p>
+                <a href="{% url 'game_app:game_router' game.url_name %}" class="auth-btn" style="display:inline-block; text-decoration:none; text-align:center; margin-top:10px;">
+                  O‘ynash
+                </a>
+            </div>
+        {% empty %}
+            <div class="dashboard-card">
+                <h3>Hozircha o‘yin yo‘q</h3>
+                <p>Admin panel orqali o‘yin qo‘shing.</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

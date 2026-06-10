@@ -1,0 +1,141 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ group.name }}{% endblock %}
+
+{% block content %}
+
+<div class="group-detail-page">
+
+    <div class="group-detail-header">
+        <div>
+            <a href="{% url 'teacher_dashboard' %}" class="back-link">← Dashboardga qaytish</a>
+            <h1>{{ group.name }}</h1>
+            <p>
+                {% if group.description %}
+                    {{ group.description }}
+                {% else %}
+                    Bu guruh uchun izoh kiritilmagan.
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="group-stat-card">
+            <span>O‘quvchilar</span>
+            <strong>{{ students.count }}</strong>
+        </div>
+    </div>
+ <div class="assignments-panel">
+
+    <div class="assignments-header">
+        <div>
+            <h2>Topshiriqlar</h2>
+            <p>Ushbu guruh uchun yaratilgan topshiriqlar.</p>
+        </div>
+
+        <a href="{% url 'assignment_create' %}" class="create-assignment-btn">
+            + Topshiriq yaratish
+        </a>
+    </div>
+
+    <div class="assignments-grid">
+
+        {% for assignment in assignments %}
+
+        <div class="assignment-card">
+
+            <div class="assignment-top">
+                <div class="assignment-icon">📝</div>
+
+                <span class="assignment-status status-{{ assignment.status }}">
+                    {{ assignment.status }}
+                </span>
+            </div>
+
+            <h3>{{ assignment.title }}</h3>
+
+            <p>
+                {{ assignment.description|truncatewords:18 }}
+            </p>
+
+            <div class="assignment-meta">
+
+                <div>
+                    <span>🎯 Maksimal ball</span>
+                    <strong>{{ assignment.max_score }}</strong>
+                </div>
+
+                <div>
+                    <span>📅 Deadline</span>
+                    <strong>
+                        {% if assignment.due_date %}
+                            {{ assignment.due_date|date:"d.m.Y H:i" }}
+                        {% else %}
+                            Belgilanmagan
+                        {% endif %}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="empty-assignments">
+            <h3>Topshiriqlar mavjud emas</h3>
+            <p>Bu guruh uchun hali topshiriq yaratilmagan.</p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+ </div>
+    <div class="students-panel">
+        <h2>Guruhdagi o‘quvchilar</h2>
+
+        <div class="students-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>O‘quvchi</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Holat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>
+                            <div class="student-mini">
+                                {% if student.avatar %}
+                                    <img src="{{ student.avatar.url }}" alt="{{ student.username }}">
+                                {% else %}
+                                    <div class="avatar-placeholder">
+                                        {{ student.username|first|upper }}
+                                    </div>
+                                {% endif %}
+                                <span>{{ student.get_full_name|default:student.username }}</span>
+                            </div>
+                        </td>
+                        <td>{{ student.username }}</td>
+                        <td>{{ student.email|default:"Email kiritilmagan" }}</td>
+                        <td><span class="status-active">Faol</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="empty-row">
+                            Bu guruhga hali o‘quvchi biriktirilmagan.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

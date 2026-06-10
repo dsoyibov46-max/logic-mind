@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Electro Labyrinth PRO</title>
+<link rel="stylesheet" href="frontend/games/electro_labirint/electro_labirint.css">
+</head>
+<body>
+
+<h1>⚡ Electro Labyrinth PRO</h1>
+
+<!-- INFO PANEL -->
+<div class="top-panel">
+    <div class="info">Level: <span id="level">1</span></div>
+    <div class="info">Moves: <span id="moves">0</span> / <span id="maxMoves">0</span></div>
+    <div class="info">Time: <span id="timer">0</span>s</div>
+    <div class="info">Best: <span id="best">0</span></div>
+    <div class="info">Stars: <span id="stars">⭐</span></div>
+</div>
+
+<!-- MESSAGE -->
+<div id="message"></div>
+
+<!-- GAME GRID -->
+<div id="grid"></div>
+
+<!-- CONTROL BUTTONS -->
+<div class="controls">
+    <button onclick="restartGame()">🔄 Restart</button>
+    <button onclick="shuffle()">🔀 Shuffle</button>
+    <button onclick="undo()">↩ Undo</button>
+    <button onclick="hint()">💡 Hint</button>
+</div>
+
+<!-- WIN SCREEN -->
+<div id="winScreen" class="win-screen">
+    <h1 class="win-text">🎉 G'ALABA!</h1>
+    <div id="winStars" class="win-stars">⭐⭐⭐</div>
+    <div class="win-buttons">
+        <button onclick="nextLevel()">➡ Next Level</button>
+        <button onclick="restartGame()">🔄 Restart</button>
+    </div>
+</div>
+
+<!-- CONFETTI -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<!-- GAME SCRIPT -->
+<script src="frontend/games/electro_labirint/electro_labirint.js"></script>
+</body>
+</html>

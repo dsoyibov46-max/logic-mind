@@ -1,0 +1,183 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="teacher-dashboard-page">
+
+    <section class="teacher-hero">
+        <div class="teacher-hero-content">
+            <span class="teacher-badge">Logic Mind Teacher Panel</span>
+            <h1>👨‍🏫 Teacher Dashboard</h1>
+            <p>O‘quvchilar natijalari, o‘yin statistikasi va eng yaxshi ko‘rsatkichlar</p>
+        </div>
+    </section>
+ 
+    <section class="groups-section">
+    <div class="section-header">
+        <div>
+            <h2>Guruhlar / Sinflar</h2>
+            <p>O‘zingizga biriktirilgan o‘quvchilar guruhlarini boshqaring.</p>
+        </div>
+        <div class="header-actions">
+    <a href="{% url 'assignment_create' %}" class="add-assignment-btn">+ Yangi topshiriq</a>
+    <a href="{% url 'group_create' %}" class="add-group-btn">+ Yangi guruh</a>
+</div>
+    </div>
+
+    <div class="groups-grid">
+        {% for group in groups %}
+            <div class="group-card">
+                <div class="group-icon">🎓</div>
+                <h3>{{ group.name }}</h3>
+
+                <p>
+                    {% if group.description %}
+                        {{ group.description|truncatewords:15 }}
+                    {% else %}
+                        Bu guruh uchun izoh kiritilmagan.
+                    {% endif %}
+                </p>
+
+                <div class="group-meta">
+                    <span>👥 {{ group.students.count }} ta o‘quvchi</span>
+                    <span>📅 {{ group.created_at|date:"d.m.Y" }}</span>
+                </div>
+
+                <a href="{% url 'group_detail' group.id %}" class="group-detail-btn">
+                    Batafsil ko‘rish
+                </a>
+            </div>
+        {% empty %}
+            <div class="empty-groups">
+                <h3>Hali guruh mavjud emas</h3>
+                <p>Yangi guruh yaratib, unga o‘quvchilarni biriktiring.</p>
+            </div>
+        {% endfor %}
+    </div>
+ </section>
+    <section class="teacher-stats">
+        <div class="teacher-stat-card purple">
+            <div class="teacher-icon">👨‍🎓</div>
+            <h3>{{ total_students }}</h3>
+            <p>Students</p>
+        </div>
+
+        <div class="teacher-stat-card blue">
+            <div class="teacher-icon">🎮</div>
+            <h3>{{ total_games_played }}</h3>
+            <p>Games Played</p>
+        </div>
+
+        <div class="teacher-stat-card green">
+            <div class="teacher-icon">📊</div>
+            <h3>{{ avg_score|default:0|floatformat:1 }}</h3>
+            <p>Average Score</p>
+        </div>
+
+        <div class="teacher-stat-card orange">
+            <div class="teacher-icon">⏱</div>
+            <h3>{{ avg_time|default:0|floatformat:0 }}s</h3>
+            <p>Average Time</p>
+        </div>
+    </section>
+
+    <section class="teacher-panel">
+        <div class="teacher-panel-header">
+            <div>
+                <span class="panel-label">Ranking</span>
+                <h2>🏆 Top Students</h2>
+            </div>
+        </div>
+
+        <div class="teacher-top-list">
+            {% for s in top_students %}
+            <div class="teacher-top-item">
+
+                <div class="rank-number">#{{ forloop.counter }}</div>
+
+                <div class="teacher-table-user">
+                    <div class="teacher-mini-avatar">
+                        {% if s.user__avatar %}
+                            <img src="/media/{{ s.user__avatar }}" alt="avatar">
+                        {% else %}
+                            {{ s.user__username|slice:":1"|upper }}
+                        {% endif %}
+                    </div>
+
+                    <div class="student-info">
+                        <h4>
+                            <a href="{% url 'teacher_student_detail' s.user__id %}">
+                                {{ s.user__username }}
+                            </a>
+                        </h4>
+                        <p>Eng yuqori natija</p>
+                    </div>
+                </div>
+
+                <div class="student-score">{{ s.best_score }}</div>
+
+            </div>
+            {% empty %}
+            <p>Hali natija yo‘q</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="teacher-panel" id="students-monitoring">
+        <div class="teacher-panel-header">
+            <div>
+                <span class="panel-label">Monitoring</span>
+                <h2>👨‍🎓 O‘quvchilar monitoringi</h2>
+            </div>
+        </div>
+
+        <div class="teacher-table-wrapper">
+            <table class="student-detail-table">
+                <thead>
+                    <tr>
+                        <th>O‘quvchi</th>
+                        <th>O‘yinlar soni</th>
+                        <th>Eng yuqori ball</th>
+                        <th>Monitoring</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for s in student_stats %}
+                    <tr>
+                        <td>
+                            <div class="teacher-table-user">
+                                <div class="teacher-mini-avatar">
+                                    {% if s.avatar %}
+                                        <img src="{{ s.avatar.url }}" alt="avatar">
+                                    {% else %}
+                                        {{ s.username|slice:":1"|upper }}
+                                    {% endif %}
+                                </div>
+
+                                <strong>{{ s.username }}</strong>
+                            </div>
+                        </td>
+
+                        <td>{{ s.total_games }}</td>
+                        <td>{{ s.best_score }}</td>
+
+                        <td>
+                            <a href="{% url 'teacher_student_detail' s.id %}" class="teacher-monitor-btn">
+                                Ko‘rish
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Hozircha o‘quvchilar mavjud emas</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}

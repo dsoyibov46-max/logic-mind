@@ -1,0 +1,108 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Profile Settings | Logic Mind{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/profile_settings.css' %}">
+
+<section class="profile-settings-page">
+
+    <div class="profile-settings-container">
+
+        <div class="profile-sidebar">
+            <div class="profile-avatar">
+
+         {% if request.user.avatar %}
+         <img src="{{ request.user.avatar.url }}" alt="avatar">
+         {% else %}
+         {{ request.user.username|slice:":1"|upper }}
+            {% endif %}
+
+       </div>
+
+            <h2>{{ request.user.get_full_name|default:request.user.username }}</h2>
+            <p>{{ request.user.role|title }}</p>
+
+            <div class="profile-info-box">
+                <span>Username</span>
+                <strong>{{ request.user.username }}</strong>
+            </div>
+
+            <div class="profile-info-box">
+                <span>Email</span>
+                <strong>{{ request.user.email|default:"Kiritilmagan" }}</strong>
+            </div>
+        </div>
+
+        <div class="profile-main-card">
+
+            <div class="profile-header">
+                <div>
+                    <span>ACCOUNT SETTINGS</span>
+                    <h1>Profil sozlamalari</h1>
+                    <p>Shaxsiy ma’lumotlaringizni yangilang.</p>
+                </div>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="profile-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST"
+             enctype="multipart/form-data"
+              class="profile-form">
+                {% csrf_token %}
+
+                <div class="profile-form-grid">
+
+                    <div class="form-group">
+                        <label>Ism</label>
+                        <input type="text" name="first_name" value="{{ request.user.first_name }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Familiya</label>
+                        <input type="text" name="last_name" value="{{ request.user.last_name }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" value="{{ request.user.email }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" value="{{ request.user.username }}" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" value="{{ request.user.role|title }}" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="text" name="phone" placeholder="+998..." value="{{ request.user.phone|default:'' }}">
+                    </div>
+                 <div class="form-group">
+                    <label>Avatar</label>
+                     <input type="file" name="avatar">
+                 </div>
+                </div>
+
+                <button type="submit" class="profile-save-btn">
+                    Saqlash
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

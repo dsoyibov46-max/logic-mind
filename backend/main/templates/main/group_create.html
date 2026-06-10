@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Yangi guruh yaratish{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+    <div class="form-card large">
+        <div class="form-header">
+            <h1>Yangi guruh yaratish</h1>
+            <p>Guruh nomini kiriting va unga o‘quvchilarni biriktiring.</p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.description.label }}</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group">
+                <label>{{ form.students.label }}</label>
+                <div class="student-checkbox-list">
+                    {{ form.students }}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'teacher_dashboard' %}" class="btn-secondary">Bekor qilish</a>
+                <button type="submit" class="btn-primary">Guruh yaratish</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

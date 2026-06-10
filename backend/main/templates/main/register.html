@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+
+<section class="auth-section">
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Ro‘yxatdan o‘tish</h2>
+            <p>Logic Mind platformasiga qo‘shiling</p>
+
+            <form method="POST" class="auth-form">
+                {% csrf_token %}
+
+                {% if form.errors %}
+    <div class="form-error">
+
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p>{{ field.label }}: {{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+
+                <div class="form-row">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+
+                <div class="form-row">
+                    {{ form.last_name.label_tag }}
+                    {{ form.last_name }}
+                </div>
+
+                <div class="form-row">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+
+                <div class="form-row">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+
+                <div class="form-row">
+                    {{ form.role.label_tag }}
+                    {{ form.role }}
+                </div>
+
+                <div class="form-row">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                </div>
+
+                <div class="form-row">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                </div>
+
+                <button type="submit" class="auth-btn">Ro‘yxatdan o‘tish</button>
+            </form>
+
+            <div class="auth-footer">
+                Akkountingiz bormi? <a href="{% url 'login' %}">Kirish</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Kirish | Logic Mind{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/register.css' %}">
+
+<section class="register-page">
+
+    <div class="register-card">
+
+        <div class="register-left">
+            <span class="register-badge">Logic Mind Platform</span>
+
+            <h1>Tizimga kirish</h1>
+
+            <p>
+                Dashboard, o‘yin statistikasi, AI tavsiyalar va monitoring
+                imkoniyatlaridan foydalanish uchun akkauntingizga kiring.
+            </p>
+
+            <div class="register-features">
+                <div>📊 Dashboard analytics</div>
+                <div>🎮 Game results</div>
+                <div>🧠 AI recommendations</div>
+            </div>
+        </div>
+
+        <div class="register-right">
+
+            <h2>Welcome Back</h2>
+
+            <p class="register-subtitle">
+                Logic Mind platformasiga xush kelibsiz
+            </p>
+
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div class="form-error">
+                        Username yoki parol noto‘g‘ri.
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                </div>
+
+                <button type="submit" class="register-btn">
+                    Kirish
+                </button>
+            </form>
+
+            <p class="login-link">
+                Akkount yo‘qmi?
+                <a href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}

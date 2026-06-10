@@ -1,0 +1,209 @@
+/* Zamonaviy va o'qishga juda qulay bo'lgan Inter shriftini yuklaymiz */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Butun sahifa foni va asosiy ko'rinishi */
+body {
+    background-color: #0f172a; /* To'q ko'k-kulrang zamonaviy fon */
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    padding: 40px 20px;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* O'yin oynasi (Konteyner) */
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background-color: #1e293b; /* Bir oz ochroq zamonaviy ichki panel */
+    border-radius: 24px; /* Yumshoq zamonaviy burchaklar */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1); /* Nafis soyalar */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* O'yin sarlavhasi */
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 30px;
+    letter-spacing: -0.025em;
+}
+
+/* Stats panel (Vaqt va Score joylashuvi) */
+.stats-box {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 35px;
+}
+
+.stat {
+    flex: 1;
+    background-color: #334155; /* Elementlar uchun tekis fon */
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.stat:hover {
+    background-color: #475569;
+}
+
+.stat span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8; /* Muloyim matn rangi */
+}
+
+.stat h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 8px 0 0 0;
+}
+
+/* Taymer va Score ranglari (Neon effektsiz, faqat toza tekis ranglar) */
+#timer {
+    color: #f43f5e; /* Chiroyli yumshoq qizil */
+}
+
+#score {
+    color: #10b981; /* Chiroyli yumshoq yashil */
+}
+
+/* Savol ko'rinishi */
+#question {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 40px 0;
+    color: #ffffff;
+    letter-spacing: -0.025em;
+}
+
+/* Variantlar tugmalari joylashuvi (Grid) */
+#options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 30px 0;
+}
+
+/* Variant tugmalarining zamonaviy ko'rinishi */
+button, .option-btn {
+    padding: 16px 24px;
+    font-size: 1.3rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    background-color: #334155;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sichqoncha ustiga kelganda variant tugmalari */
+#options button:hover, .option-btn:hover {
+    background-color: #3b82f6; /* Zamonaviy ko'k rang */
+    border-color: #3b82f6;
+    transform: translateY(-2px); /* Kichik yuqoriga ko'tarilish effekti */
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+}
+
+/* Aktiv (bosilgan) holat */
+#options button:active, .option-btn:active {
+    transform: translateY(0);
+}
+
+/* To'g'ri va Xato javob berilgandagi tekis ranglar */
+.option-btn.correct { 
+    background-color: #10b981 !important; 
+    border-color: #10b981 !important;
+    color: #ffffff !important; 
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3) !important;
+}
+
+.option-btn.wrong { 
+    background-color: #ef4444 !important; 
+    border-color: #ef4444 !important;
+    color: #ffffff !important; 
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Natija matni (To'g'ri/Xato so'zi) */
+#result {
+    font-size: 1.2rem;
+    font-weight: 600;
+    height: 35px;
+    margin: 15px 0;
+}
+
+/* O'yinni boshlash tugmasi */
+.start-btn {
+    padding: 16px 48px;
+    font-size: 1.2rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 9999px; /* To'liq yumaloq (pill) shakli */
+    border: none;
+    background-color: #3b82f6; /* Zamonaviy ko'k */
+    color: white;
+    margin: 20px 0;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+    transition: all 0.2s ease;
+}
+
+.start-btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4);
+}
+
+/* O'yin tugash ekrani paneli */
+.game-over {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: #1e293b;
+    border: 2px solid #ef4444; /* Vaqt tugaganini bildiruvchi qizil chegara */
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.game-over h2 {
+    color: #ef4444;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.game-over p {
+    font-size: 1.15rem;
+    color: #cbd5e1;
+    margin: 12px 0;
+}
+
+.game-over strong {
+    color: #ffffff;
+    font-size: 1.3rem;
+}
+
+/* Orqaga va boshqa havolalar */
+.back-btn {
+    display: inline-block;
+    margin-top: 24px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-btn:hover {
+    color: #ffffff;
+}

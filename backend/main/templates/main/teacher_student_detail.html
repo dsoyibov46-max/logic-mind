@@ -1,0 +1,171 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="student-detail-page">
+    <section class="student-detail-hero">
+        <a href="{% url 'teacher_dashboard' %}" class="back-link">← Teacher Dashboard</a>
+        <h1>👨‍🎓 {{ student.username }}</h1>
+        <p>Studentning o‘yin natijalari va umumiy statistikasi</p>
+    </section>
+
+    <section class="student-detail-stats">
+        <div class="student-detail-card">
+            <span>🎮</span>
+            <h3>{{ total_games }}</h3>
+            <p>Total Games</p>
+        </div>
+
+        <div class="student-detail-card">
+            <span>🏆</span>
+            <h3>{{ best_score|default:0 }}</h3>
+            <p>Best Score</p>
+        </div>
+
+        <div class="student-detail-card">
+            <span>📊</span>
+            <h3>{{ avg_score|default:0|floatformat:1 }}</h3>
+            <p>Average Score</p>
+        </div>
+
+        <div class="student-detail-card">
+            <span>⏱</span>
+            <h3>{{ avg_time|default:0|floatformat:0 }}s</h3>
+            <p>Average Time</p>
+        </div>
+    </section>
+
+    <section class="analytics-chart-section">
+        <div class="chart-card">
+            <div class="chart-header">
+                <div>
+                    <span>ANALYTICS</span>
+                    <h2>Score Progress</h2>
+                </div>
+
+                <div class="performance-badge {{ performance_class }}">
+                    {{ performance_status }}
+                </div>
+            </div>
+
+            <canvas id="scoreChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <div>
+                    <span>PERFORMANCE</span>
+                    <h2>Time Analysis</h2>
+                </div>
+            </div>
+
+            <canvas id="timeChart"></canvas>
+        </div>
+    </section>
+
+    <section class="student-detail-panel">
+        <h2>🕘 Recent Results</h2>
+
+        <table class="student-detail-table">
+            <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                    <th>Level</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for r in student_results %}
+                <tr>
+                    <td>{{ r.game.title }}</td>
+                    <td>{{ r.score }}</td>
+                    <td>{{ r.time_spent }}s</td>
+                    <td>{{ r.level_reached }}</td>
+                    <td>{{ r.played_at|date:"d.m.Y H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Bu student hali o‘yin o‘ynamagan</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{ score_labels|json_script:"score-labels" }}
+{{ score_data|json_script:"score-data" }}
+{{ time_data|json_script:"time-data" }}
+
+<script>
+    const scoreLabels = JSON.parse(document.getElementById('score-labels').textContent);
+    const scoreData = JSON.parse(document.getElementById('score-data').textContent);
+    const timeData = JSON.parse(document.getElementById('time-data').textContent);
+
+    const scoreCtx = document.getElementById('scoreChart');
+    const timeCtx = document.getElementById('timeChart');
+
+    if (scoreCtx) {
+        new Chart(scoreCtx, {
+            type: 'line',
+            data: {
+                labels: scoreLabels,
+                datasets: [{
+                    label: 'Score',
+                    data: scoreData,
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.18)',
+                    pointBackgroundColor: '#7c3aed',
+                    pointBorderColor: '#ffffff',
+                    pointRadius: 5,
+                    borderWidth: 4,
+                    tension: 0.45,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
+    if (timeCtx) {
+        new Chart(timeCtx, {
+            type: 'bar',
+            data: {
+                labels: scoreLabels,
+                datasets: [{
+                    label: 'Time Spent',
+                    data: timeData,
+                    backgroundColor: [
+                        '#8b5cf6',
+                        '#6366f1',
+                        '#06b6d4',
+                        '#14b8a6',
+                        '#22c55e'
+                    ],
+                    borderRadius: 14,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}
